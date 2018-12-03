@@ -10,7 +10,6 @@ public class NetworkService {
     private static final String BASE_URL = "https://api.openweathermap.org";
     private Retrofit mRetrofit;
 
-
     private NetworkService() {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -28,6 +27,4 @@ public class NetworkService {
     public JSONPlaceHolderApi getJSONApi() {
         return mRetrofit.create(JSONPlaceHolderApi.class);
     }
-
-    
 }

@@ -16,11 +16,14 @@ public class DetailsActivity extends AppCompatActivity {
     public final String HUMIDITY = "humidity";
     public final String PRESSURE = "pressure";
     public final String WIND = "wind";
+    public final String COUNTRY = "country";
 
     private TextView tv_temp;
     private TextView tv_humidity;
     private TextView tv_pressure;
     private TextView tv_wind;
+    private TextView tv_city;
+    private TextView tv_country;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +33,15 @@ public class DetailsActivity extends AppCompatActivity {
         tv_humidity = findViewById(R.id.tv_humidity_value);
         tv_pressure = findViewById(R.id.tv_pressure_value);
         tv_wind = findViewById(R.id.tv_wind_value);
+        tv_city = findViewById(R.id.tv_city_name);
+        tv_country = findViewById(R.id.tv_country_name);
         Intent intent = getIntent();
         tv_temp.setText(intent.getStringExtra(TEMP));
         tv_humidity.setText(intent.getStringExtra(HUMIDITY));
         tv_pressure.setText(intent.getStringExtra(PRESSURE));
         tv_wind.setText(intent.getStringExtra(WIND));
+        tv_city.setText(intent.getStringExtra(CITY));
+        tv_country.setText(intent.getStringExtra(COUNTRY));
 
     }
 }

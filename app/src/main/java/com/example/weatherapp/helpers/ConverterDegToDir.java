@@ -1,9 +1,8 @@
-package com.example.weatherapp.helper;
+package com.example.weatherapp.helpers;
 
-public class Helper {
+public class ConverterDegToDir {
 
     public static String simpleConvertDeg(Integer deg){
-
         if(deg <= 90){
             return "B";
         } else if(deg > 90 && deg <= 180){
@@ -32,5 +31,4 @@ public class Helper {
             return "C/З";
         }
     }
-
 }
