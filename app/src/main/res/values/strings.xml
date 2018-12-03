@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="city_country_names">City and country</string>
+    <string name="city_name">City</string>
+    <string name="country_name">Country</string>
+    <string name="temperature">temperature</string>
+    <string name="provider_gps">GPS</string>
+    <string name="provider_network">Network</string>
+    <string name="location_settings">Location settings</string>
+    <string name="temperature_rus">Темп.:</string>
+    <string name="humidity">Влажность:</string>
+    <string name="pressure">Давление:</string>
+    <string name="wind_to">Ветер:</string>
 </resources>
