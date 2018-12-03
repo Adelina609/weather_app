@@ -12,6 +12,7 @@ import com.example.weatherapp.R;
 import com.example.weatherapp.adapter.WeatherAdapter;
 import com.example.weatherapp.entities.City;
 import com.example.weatherapp.entities.WeatherResponse;
+import com.example.weatherapp.helper.Helper;
 import com.example.weatherapp.network.NetworkService;
 
 import java.util.ArrayList;
@@ -29,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private WeatherAdapter adapter;
     private List<City> cities;
+    public final String CITY = "city";
+    public final String TEMP = "temp";
+    public final String HUMIDITY = "humidity";
+    public final String PRESSURE = "pressure";
+    public final String WIND = "wind";
 
 
     @Override
@@ -45,7 +51,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(City city) {
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-                intent.putExtra("city", city);
+                intent.putExtra(TEMP, ""+Math.round(city.getMain().getTemp()-273));
+                intent.putExtra(HUMIDITY, "" + city.getMain().getHumidity());
+                intent.putExtra(PRESSURE, "" + city.getMain().getPressure());
+                intent.putExtra(WIND, Helper.simpleConvertDeg(city.getWind().getDeg()));
                 startActivity(intent);
             }
         };
