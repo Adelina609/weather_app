@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(Call<WeatherResponse> call, Throwable t) {
-                        Toast.makeText(MainActivity.this, "Error: Can't get connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Can't get connection", Toast.LENGTH_SHORT).show();
                         System.out.println(t.getMessage());
                     }
                 });
