@@ -34,6 +34,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.5'
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.karumi:dexter:5.0.0'
+
 }
 //configurations.all {
 //    resolutionStrategy.eachDependency { DependencyResolveDetails details ->

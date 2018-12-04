@@ -1,9 +1,11 @@
 package com.example.weatherapp.activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +16,14 @@ import com.example.weatherapp.entities.WeatherResponse;
 import com.example.weatherapp.helpers.ConverterDegToDir;
 import com.example.weatherapp.network.NetworkService;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,20 +77,36 @@ public class MainActivity extends AppCompatActivity {
         adapter = new WeatherAdapter(new ArrayList<City>(0), onItemClickListener);
         recyclerView.setAdapter(adapter);
 
-        mfusedLocationProviderClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            lat = location.getLatitude();
-                            lon = location.getLongitude();
-                        } else {
-                            //Lat and Long of the Kazan
-                            lat = 55.8;
-                            lon = 49.0;
-                        }
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(new PermissionListener() {
+                    @Override public void onPermissionGranted(PermissionGrantedResponse response) {
+                        mfusedLocationProviderClient.getLastLocation()
+                                .addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+                                    @Override
+                                    public void onSuccess(Location location) {
+                                        lat = location.getLatitude();
+                                        lon = location.getLongitude();
+                                    }
+                                });
                     }
-                });
+                    @Override public void onPermissionDenied(PermissionDeniedResponse response) {
+                        mfusedLocationProviderClient.getLastLocation()
+                                .addOnFailureListener(MainActivity.this, new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        //Lat and Long of the Kazan
+                                        lat = 55.8;
+                                        lon = 49.0;
+                                    }
+                                });
+                    }
+                    @Override public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+
+
 
         NetworkService.getInstance()
                 .getJSONApi()
