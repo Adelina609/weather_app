@@ -11,11 +11,10 @@ import com.example.weatherapp.entities.City;
 
 import java.util.List;
 
-
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.CityViewHolder>{
 
-    List<City> list;
-    OnItemClickListener onItemClickListener;
+    private List<City> list;
+    private OnItemClickListener onItemClickListener;
 
     public WeatherAdapter(List<City> list, OnItemClickListener onItemClickListener) {
         this.list = list;
@@ -66,15 +65,15 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.CityView
             });
         }
 
-        public void bind(City object ){
-            city.setText(object.getName());
-            if(object.getSys().getCountry().equals("")){
+        public void bind(City city){
+            this.city.setText(city.getName());
+            if(city.getSys().getCountry().equals("")){
                 country.setText("Russia");
-                object.getSys().setCountry("Russia");
+                city.getSys().setCountry("Russia");
             } else {
-                country.setText(object.getSys().getCountry());
+                country.setText(city.getSys().getCountry());
             }
-            temp.setText(""+Math.round(object.getMain().getTemp()-273));
+            temp.setText(""+Math.round(city.getMain().getTemp()-273));
         }
     }
 

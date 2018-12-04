@@ -25,10 +25,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "clouds",
         "weather"
 })
-
 public class City implements Serializable
 {
-
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("name")
@@ -174,5 +172,4 @@ public class City implements Serializable
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

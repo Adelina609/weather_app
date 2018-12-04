@@ -1,4 +1,3 @@
-
 package com.example.weatherapp.entities;
 
 import java.util.HashMap;

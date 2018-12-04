@@ -1,6 +1,6 @@
 package com.example.weatherapp.network;
 
-import com.example.weatherapp.JSONPlaceHolderApi;
+import com.example.weatherapp.WeatherService;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -9,6 +9,7 @@ public class NetworkService {
     private static NetworkService mInstance;
     private static final String BASE_URL = "https://api.openweathermap.org";
     private Retrofit mRetrofit;
+    private WeatherService weatherService;
 
     private NetworkService() {
         mRetrofit = new Retrofit.Builder()
@@ -24,7 +25,10 @@ public class NetworkService {
         return mInstance;
     }
 
-    public JSONPlaceHolderApi getJSONApi() {
-        return mRetrofit.create(JSONPlaceHolderApi.class);
+    public WeatherService getWeatherService() {
+        if(mRetrofit == null){
+            weatherService = mRetrofit.create(WeatherService.class);
+        }
+        return weatherService;
     }
 }

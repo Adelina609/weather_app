@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
+
 import com.example.weatherapp.R;
 import com.example.weatherapp.adapter.WeatherAdapter;
 import com.example.weatherapp.entities.City;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     public final String PRESSURE = "pressure";
     public final String WIND = "wind";
     public final String COUNTRY = "country";
+    public final int CITY_COUNT = 20;
+    public final String APP_ID = "56fc6c6cb76c0864b4cd055080568268";
 
     private double lat;
     private double lon;
@@ -107,10 +111,9 @@ public class MainActivity extends AppCompatActivity {
                 }).check();
 
 
-
         NetworkService.getInstance()
-                .getJSONApi()
-                .getPostOfUser(lat, lon, 20,"56fc6c6cb76c0864b4cd055080568268")
+                .getWeatherService()
+                .getPostOfUser(lat, lon, CITY_COUNT,APP_ID)
                 .enqueue(new Callback<WeatherResponse>() {
                     @Override
                     public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
@@ -122,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(Call<WeatherResponse> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "Error: Can't get connection", Toast.LENGTH_SHORT).show();
                         System.out.println(t.getMessage());
                     }
                 });
