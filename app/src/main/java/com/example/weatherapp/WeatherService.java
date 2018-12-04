@@ -9,5 +9,5 @@ import retrofit2.http.Query;
 public interface WeatherService {
     @GET("/data/2.5/find")
     Call<WeatherResponse> getPostOfUser(@Query("lat") double lat, @Query("lon") double lon,
-                                               @Query("cnt") int cnt, @Query("appid") String appid);
+                                               @Query("cnt") int cnt, @Query("appid") String appid, @Query("units") String units);
 }

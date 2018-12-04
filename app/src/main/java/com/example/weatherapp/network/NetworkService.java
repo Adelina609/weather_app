@@ -26,7 +26,7 @@ public class NetworkService {
     }
 
     public WeatherService getWeatherService() {
-        if(mRetrofit == null){
+        if(weatherService == null){
             weatherService = mRetrofit.create(WeatherService.class);
         }
         return weatherService;

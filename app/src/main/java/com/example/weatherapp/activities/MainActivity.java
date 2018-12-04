@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public final String COUNTRY = "country";
     public final int CITY_COUNT = 20;
     public final String APP_ID = "56fc6c6cb76c0864b4cd055080568268";
+    public final String UNITS = "metric";
 
     private double lat;
     private double lon;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
         NetworkService.getInstance()
                 .getWeatherService()
-                .getPostOfUser(lat, lon, CITY_COUNT,APP_ID)
+                .getPostOfUser(lat, lon, CITY_COUNT,APP_ID, UNITS)
                 .enqueue(new Callback<WeatherResponse>() {
                     @Override
                     public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
