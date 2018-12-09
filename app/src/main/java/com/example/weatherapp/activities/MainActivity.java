@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.example.weatherapp.AppDataBase;
 import com.example.weatherapp.R;
 import com.example.weatherapp.adapter.WeatherAdapter;
 import com.example.weatherapp.entities.City;
@@ -29,6 +30,12 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.room.Room;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private WeatherAdapter adapter;
     private FusedLocationProviderClient mfusedLocationProviderClient;
+    private AppDataBase dataBase;
 
     public final String CITY = "city";
     public final String TEMP = "temp";
@@ -52,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private double lat;
     private double lon;
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint({"MissingPermission", "CheckResult"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +71,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(City city) {
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-                intent.putExtra(TEMP, ""+Math.round(city.getMain().getTemp()-273));
+                intent.putExtra(TEMP, "" + Math.round(city.getMain().getTemp() - 273));
                 intent.putExtra(HUMIDITY, "" + city.getMain().getHumidity());
                 intent.putExtra(PRESSURE, "" + city.getMain().getPressure());
                 intent.putExtra(WIND, ConverterDegToDir.simpleConvertDeg(city.getWind().getDeg()));
                 intent.putExtra(CITY, city.getName());
-                if(city.getSys().getCountry().equals("")){
+                if (city.getSys().getCountry().equals("")) {
                     city.getSys().setCountry("Russia");
                     intent.putExtra(COUNTRY, "Russia");
                 } else {
@@ -85,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {
-                    @Override public void onPermissionGranted(PermissionGrantedResponse response) {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
                         mfusedLocationProviderClient.getLastLocation()
                                 .addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
                                     @Override
@@ -95,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                     }
-                    @Override public void onPermissionDenied(PermissionDeniedResponse response) {
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
                         mfusedLocationProviderClient.getLastLocation()
                                 .addOnFailureListener(MainActivity.this, new OnFailureListener() {
                                     @Override
@@ -106,29 +117,41 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                     }
-                    @Override public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
                         token.continuePermissionRequest();
                     }
                 }).check();
 
+        dataBase = Room.databaseBuilder(getApplicationContext(),
+                AppDataBase.class, "cities").build();
 
         NetworkService.getInstance()
                 .getWeatherService()
-                .getPostOfUser(lat, lon, CITY_COUNT,APP_ID, UNITS)
-                .enqueue(new Callback<WeatherResponse>() {
-                    @Override
-                    public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
-                        WeatherResponse weatherResponse = response.body();
-                        if (weatherResponse != null) {
-                            List<City> list = weatherResponse.getList();
-                            adapter.updateData(list);
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<WeatherResponse> call, Throwable t) {
-                        Toast.makeText(MainActivity.this, "Can't get connection", Toast.LENGTH_SHORT).show();
-                        System.out.println(t.getMessage());
-                    }
+                .getWeatherData(lat, lon, CITY_COUNT, APP_ID, UNITS)
+                .map(WeatherResponse::getList)
+                .map(list -> {
+                    dataBase.getCityDao().insertAll(list);
+                    return list;
+                })
+                .onErrorResumeNext(error ->
+                        dataBase.getCityDao().getCities()
+                )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    adapter.updateData(list);
+                }, throwable -> {
+
+//                    dataBase.getCityDao().getCities()
+//                            .subscribe(list -> {
+//                                        adapter.updateData(list);
+//                                    }
+//                            );
+                    Toast.makeText(MainActivity.this, "Can't get connection", Toast.LENGTH_SHORT).show();
                 });
+
     }
+
 }

@@ -11,6 +11,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "id",
@@ -25,12 +28,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "clouds",
         "weather"
 })
+@Entity
 public class City implements Serializable
 {
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("name")
-    private String name;
+    @PrimaryKey private String name;
     @JsonProperty("coord")
     private Coord coord;
     @JsonProperty("main")
