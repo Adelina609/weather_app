@@ -1,4 +1,3 @@
-
 package com.example.weatherapp.entities;
 
 import java.util.HashMap;
@@ -12,10 +11,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id",
-    "main",
-    "description",
-    "icon"
+        "id",
+        "main",
+        "description",
+        "icon"
 })
 public class Weather {
 

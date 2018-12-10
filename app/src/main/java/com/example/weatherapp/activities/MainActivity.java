@@ -140,9 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(list -> {
-                    adapter.updateData(list);
-                }, throwable -> {
+                .subscribe(list -> adapter.updateData(list), throwable -> {
 
 //                    dataBase.getCityDao().getCities()
 //                            .subscribe(list -> {

@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -34,8 +36,10 @@ public class City implements Serializable
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("name")
-    @PrimaryKey private String name;
+    @PrimaryKey @NonNull
+    private String name;
     @JsonProperty("coord")
+    @Ignore
     private Coord coord;
     @JsonProperty("main")
     private Main main;
@@ -46,14 +50,19 @@ public class City implements Serializable
     @JsonProperty("sys")
     private Sys sys;
     @JsonProperty("rain")
+    @Ignore
     private Object rain;
     @JsonProperty("snow")
+    @Ignore
     private Object snow;
     @JsonProperty("clouds")
+    @Ignore
     private Clouds clouds;
     @JsonProperty("weather")
+    @Ignore
     private List<Weather> weather = null;
     @JsonIgnore
+    @Ignore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
     private final static long serialVersionUID = -391046993067488583L;
 
