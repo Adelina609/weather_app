@@ -34,9 +34,9 @@ import androidx.room.PrimaryKey;
 public class City implements Serializable
 {
     @JsonProperty("id")
+    @PrimaryKey @NonNull
     private Integer id;
     @JsonProperty("name")
-    @PrimaryKey @NonNull
     private String name;
     @JsonProperty("coord")
     @Ignore

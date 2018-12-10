@@ -73,7 +73,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.CityView
             } else {
                 country.setText(city.getSys().getCountry());
             }
-            temp.setText(""+Math.round(city.getMain().getTemp()-273));
+            temp.setText(""+city.getMain().getTemp());
         }
     }
 

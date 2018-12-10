@@ -23,6 +23,7 @@ public class EntitiesConverter {
         thisMain.setHumidity(Integer.parseInt(data[2]));
         return thisMain;
     }
+
     @TypeConverter
     public String fromSys(Sys sys){
         return sys.getCountry();

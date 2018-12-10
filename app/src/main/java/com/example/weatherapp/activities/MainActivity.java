@@ -124,8 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).check();
 
-        dataBase = Room.databaseBuilder(getApplicationContext(),
-                AppDataBase.class, "cities").build();
+        dataBase = AppDataBase.getInstance();
 
         NetworkService.getInstance()
                 .getWeatherService()
