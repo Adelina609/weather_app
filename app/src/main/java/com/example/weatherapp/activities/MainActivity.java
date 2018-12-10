@@ -141,12 +141,6 @@ public class MainActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> adapter.updateData(list), throwable -> {
-
-//                    dataBase.getCityDao().getCities()
-//                            .subscribe(list -> {
-//                                        adapter.updateData(list);
-//                                    }
-//                            );
                     Toast.makeText(MainActivity.this, "Can't get connection", Toast.LENGTH_SHORT).show();
                 });
 
