@@ -46,6 +46,4 @@ public class EntitiesConverter {
         thisWind.setDeg(wind);
         return thisWind;
     }
-
-
 }
