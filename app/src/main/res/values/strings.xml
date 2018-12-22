@@ -7,8 +7,8 @@
     <string name="provider_gps">GPS</string>
     <string name="provider_network">Network</string>
     <string name="location_settings">Location settings</string>
-    <string name="temperature_rus">Темп.:</string>
-    <string name="humidity">Влажность:</string>
-    <string name="pressure">Давление:</string>
-    <string name="wind_to">Ветер:</string>
+    <string name="temperature_rus">Temp.:</string>
+    <string name="humidity">Humidity:</string>
+    <string name="pressure">Pressure:</string>
+    <string name="wind_to">Wind:</string>
 </resources>

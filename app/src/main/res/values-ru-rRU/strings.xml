@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Погода</string>
+    <string name="city_country_names">Город и страна</string>
+    <string name="city_name">Город</string>
+    <string name="country_name">Страна</string>
+    <string name="temperature">Температуа</string>
+    <string name="provider_gps">геолокация</string>
+    <string name="provider_network">Сеть</string>
+    <string name="location_settings">Настройки местоположения</string>
+    <string name="temperature_rus">Темп.:</string>
+    <string name="humidity">Влажность:</string>
+    <string name="pressure">Давление:</string>
+    <string name="wind_to">Ветер:</string>
+</resources>
