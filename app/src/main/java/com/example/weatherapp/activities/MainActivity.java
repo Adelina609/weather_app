@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> adapter.updateData(list), throwable -> {
-                    Toast.makeText(MainActivity.this, , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "@string/error_connection", Toast.LENGTH_SHORT).show();
                 });
 
     }
