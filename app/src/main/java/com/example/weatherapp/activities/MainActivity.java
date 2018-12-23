@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(WIND, ConverterDegToDir.simpleConvertDeg(city.getWind().getDeg()));
                 intent.putExtra(CITY, city.getName());
                 if (city.getSys().getCountry().equals("")) {
-                    city.getSys().setCountry("Russia");
-                    intent.putExtra(COUNTRY, "Russia");
+                    city.getSys().setCountry("@string/russia");
+                    intent.putExtra(COUNTRY, "@string/russia");
                 } else {
                     intent.putExtra(COUNTRY, city.getSys().getCountry());
                 }
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> adapter.updateData(list), throwable -> {
-                    Toast.makeText(MainActivity.this, "Can't get connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, , Toast.LENGTH_SHORT).show();
                 });
 
     }

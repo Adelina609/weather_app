@@ -12,4 +12,6 @@
     <string name="humidity">Влажность:</string>
     <string name="pressure">Давление:</string>
     <string name="wind_to">Ветер:</string>
+    <string name="error_connection">Ошибка при подключении</string>
+    <string name="russia">Россия</string>
 </resources>

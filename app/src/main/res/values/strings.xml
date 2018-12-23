@@ -11,4 +11,6 @@
     <string name="humidity">Humidity:</string>
     <string name="pressure">Pressure:</string>
     <string name="wind_to">Wind:</string>
+    <string name="error_connection">Can not get connection</string>
+    <string name="russia">Russia</string>
 </resources>
